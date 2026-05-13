@@ -26,7 +26,7 @@ export function PrimaryButton({ children, onClick, disabled, busy, full, classNa
       onMouseDown={() => setPress(true)}
       onMouseUp={() => setPress(false)}
       className={`
-        relative overflow-hidden rounded-xl px-5 py-3.5 border-0
+        relative overflow-hidden rounded-xl px-2 py-3.5 border-0
         inline-flex items-center justify-center gap-2
         font-semibold text-[15px] tracking-[-0.005em] text-white
         transition-[transform,box-shadow,background-color] duration-150

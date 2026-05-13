@@ -9,7 +9,9 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { CardInputGroup } from '@/components/ui/CardInputGroup';
 import { OrderSummary } from '@/components/ui/OrderSummary';
 import { Brand } from '@/components/ui/Brand';
-import { InfoIcon } from '@/components/ui/Icon';
+import { InfoIcon, LockIcon } from '@/components/ui/Icon';
+import { Button } from '@/components/ui/button';
+import { StripeMark } from '@/components/ui/StripeMark';
 import { useState } from 'react';
 
 const schema = z.object({
@@ -81,9 +83,9 @@ export function CheckoutForm({ email, setEmail, onSuccess, onError, onBusyChange
 
   return (
     <Form {...form}>
-      <div className="flex min-h-[520px]">
+      <div className="flex flex-col md:flex-row md:min-h-[520px]">
         {/* Left: payment form */}
-        <div className="flex-[1.3] px-9 py-8 flex flex-col gap-4 border-r border-line">
+        <div className="flex-[1.3] px-5 md:px-9 py-6 md:py-8 flex flex-col gap-4 md:border-r border-line">
           <div>
             <div className="text-[13px] font-semibold text-ink-2 uppercase tracking-wider mb-3">Payment method</div>
             <div className="flex items-center gap-2">
@@ -140,6 +142,22 @@ export function CheckoutForm({ email, setEmail, onSuccess, onError, onBusyChange
                   <FormMessage />
                 </FormItem>
               )} />
+            </div>
+          </div>
+          {/* Mobile-only confirm button */}
+          <div className="flex flex-col gap-2 md:hidden pt-2">
+            <Button className="w-full" disabled={busy} onClick={onSubmit} type="button">
+              {busy ? (
+                <span className="flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin-slow" />
+                  Processing…
+                </span>
+              ) : "Confirm your order · $99.00"}
+            </Button>
+            <div className="flex items-center justify-center gap-1.5 text-[11.5px] text-muted">
+              <LockIcon size={11} />
+              <span>Encrypted &amp; secure · powered by</span>
+              <span className="text-ink-2"><StripeMark color="currentColor" /></span>
             </div>
           </div>
         </div>
