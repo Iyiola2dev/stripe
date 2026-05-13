@@ -14,23 +14,22 @@ interface Props {
   maxLength?: number;
   autoComplete?: string;
   inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
-  style?: React.CSSProperties;
+  className?: string;
 }
 
-export function TextInput({ value, onChange, placeholder, onBlur, error, prefix, suffix, mono, type = 'text', maxLength, autoComplete, inputMode, style = {} }: Props) {
+export function TextInput({ value, onChange, placeholder, onBlur, error, prefix, suffix, mono, type = 'text', maxLength, autoComplete, inputMode, className = '' }: Props) {
   const [focus, setFocus] = useState(false);
+
+  const borderClass = error
+    ? 'border-red-400'
+    : focus ? 'border-accent' : 'border-line';
+
+  const shadowClass = focus
+    ? (error ? 'shadow-input-error' : 'shadow-input-focus')
+    : '';
+
   return (
-    <div style={{
-      display: 'flex', alignItems: 'center', gap: 8,
-      background: 'var(--surface)',
-      border: `1px solid ${error ? '#e0764a' : focus ? 'var(--ink)' : 'var(--line)'}`,
-      borderRadius: 10, padding: '0 12px', height: 44,
-      boxShadow: focus
-        ? `0 0 0 4px ${error ? 'rgba(224,118,74,.15)' : 'rgba(26,23,20,.08)'}`
-        : 'inset 0 1px 0 rgba(255,255,255,.5)',
-      transition: 'border-color .15s, box-shadow .2s',
-      ...style,
-    }}>
+    <div className={`flex items-center gap-2 bg-surface rounded-lg px-3 h-11 border transition-[border-color,box-shadow] duration-150 ${borderClass} ${shadowClass} ${className}`}>
       {prefix}
       <input
         type={type} value={value} onChange={e => onChange(e.target.value)}
@@ -38,13 +37,7 @@ export function TextInput({ value, onChange, placeholder, onBlur, error, prefix,
         onBlur={() => { setFocus(false); onBlur?.(); }}
         placeholder={placeholder} maxLength={maxLength}
         autoComplete={autoComplete} inputMode={inputMode}
-        style={{
-          flex: 1, height: '100%', border: 0, background: 'transparent',
-          fontSize: 14.5, color: 'var(--ink)',
-          fontFamily: mono ? "'Geist Mono', ui-monospace, monospace" : 'inherit',
-          letterSpacing: mono ? '.01em' : 'normal',
-          minWidth: 0,
-        }}
+        className={`flex-1 h-full border-0 bg-transparent text-[14px] text-ink min-w-0 placeholder:text-muted-2 ${mono ? 'font-mono tracking-[.01em]' : 'font-sans'}`}
       />
       {suffix}
     </div>

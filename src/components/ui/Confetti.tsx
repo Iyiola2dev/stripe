@@ -51,10 +51,5 @@ export function Confetti({ run }: { run: boolean }) {
     return () => cancelAnimationFrame(raf);
   }, [run]);
 
-  return (
-    <canvas ref={ref} style={{
-      position: 'absolute', inset: 0, width: '100%', height: '100%',
-      pointerEvents: 'none', zIndex: 1,
-    }} />
-  );
+  return <canvas ref={ref} className="absolute inset-0 w-full h-full pointer-events-none z-[1]" />;
 }

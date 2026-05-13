@@ -1,7 +1,6 @@
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { SuccessMark } from '@/components/ui/SuccessMark';
 import { Confetti } from '@/components/ui/Confetti';
-import { Receipt } from '@/components/ui/Receipt';
 import { Brand } from '@/components/ui/Brand';
 import { ArrowRightIcon } from '@/components/ui/Icon';
 
@@ -15,39 +14,45 @@ interface Props { onContinue: () => void; cardLast4?: string; }
 
 export function SuccessView({ onContinue, cardLast4 = '4242' }: Props) {
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="relative shadow-sm border border-line rounded-xl overflow-hidden">
       <Confetti run />
-      <div style={{
-        padding: '60px 48px 44px', display: 'flex', flexDirection: 'column',
-        alignItems: 'center', textAlign: 'center', gap: 24,
-        animation: 'floatUp .5s ease both', position: 'relative', zIndex: 2,
-      }}>
-        <SuccessMark size={104} />
+      <div className="px-10 pt-12 pb-10 flex flex-col items-center text-center gap-6 animate-floatUp-slow relative z-[2]">
+        <SuccessMark size={88} />
+
         <div>
-          <h2 style={{ fontSize: 36, lineHeight: 1.1, margin: 0, fontWeight: 500, letterSpacing: '-0.025em', color: 'var(--ink)' }}>
-            Subscription <span className="serif" style={{ fontStyle: 'italic' }}>activated</span>
+          <h2 className="text-[28px] font-bold tracking-[-0.025em] text-ink m-0">
+            Subscription activated
           </h2>
-          <p style={{ fontSize: 15.5, color: 'var(--muted)', margin: '10px 0 0 0', lineHeight: 1.5, maxWidth: 360 }}>
-            Welcome to Halo Pro. We&apos;ve sent a receipt to your email and unlocked every feature for your team.
+          <p className="text-[14px] text-muted mt-2 mb-0 leading-relaxed max-w-[340px]">
+            Welcome to Follow Pack. A receipt has been sent to your email and every feature is now unlocked for your team.
           </p>
         </div>
 
-        <div style={{ width: '100%', maxWidth: 360, background: 'var(--surface-2)', border: '1px solid var(--line-2)', borderRadius: 12, padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <Receipt row="Plan" val="Halo Pro · monthly" />
-          <Receipt row="Charged" val={<span className="num">$99.00 · USD</span>} />
-          <Receipt row="Card" val={
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              <Brand kind="visa" w={24} h={16} /> •••• {cardLast4}
-            </span>
-          } />
-          <Receipt row="Next renewal" val={nextRenewal()} muted />
+        <div className="w-full max-w-[360px] bg-surface-2 border border-line rounded-xl overflow-hidden">
+          {[
+            { label: 'Plan', value: 'Follow Pack · monthly' },
+            { label: 'Charged', value: '$99.00 · USD', mono: true },
+            {
+              label: 'Card', value: (
+                <span className="inline-flex items-center gap-1.5">
+                  <Brand kind="visa" w={24} h={16} /> •••• {cardLast4}
+                </span>
+              )
+            },
+            { label: 'Next renewal', value: nextRenewal(), muted: true },
+          ].map((row, i) => (
+            <div key={i} className={`flex items-center justify-between px-4 py-3 text-[13px] ${i > 0 ? 'border-t border-line' : ''}`}>
+              <span className="text-muted">{row.label}</span>
+              <span className={`font-medium ${row.muted ? 'text-muted' : 'text-ink'} ${row.mono ? 'num' : ''}`}>{row.value}</span>
+            </div>
+          ))}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 360 }}>
+        <div className="flex flex-col gap-2.5 w-full max-w-[360px]">
           <PrimaryButton full onClick={onContinue}>
-            Continue to dashboard <ArrowRightIcon size={14} color="#f4ede0" />
+            Continue to dashboard <ArrowRightIcon size={14} color="#fff" />
           </PrimaryButton>
-          <button style={{ fontSize: 12.5, color: 'var(--muted)', padding: '8px' }}>
+          <button className="text-[12.5px] text-muted py-2 hover:text-ink-2 transition-colors">
             Email receipt &amp; manage billing
           </button>
         </div>

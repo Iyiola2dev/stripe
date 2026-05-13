@@ -1,95 +1,75 @@
-*, *::before, *::after { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; padding: 0; max-width: 100vw; overflow-x: hidden; }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── light tokens ── */
+:root {
+  --ink: #0F172A;
+  --ink-2: #334155;
+  --muted: #64748B;
+  --muted-2: #94A3B8;
+  --line: rgba(15, 23, 42, 0.10);
+  --line-2: rgba(15, 23, 42, 0.06);
+  --surface: #FFFFFF;
+  --surface-2: #F8FAFC;
+  --cream: #F1F5F9;
+  --bone: #E2E8F0;
+  --accent: #2563EB;
+  --accent-2: #DBEAFE;
+  --accent-3: #93C5FD;
+  --good: #10B981;
+  --page-bg: #C5D9F5;
+  --glass: #FFFFFF;
+  --glass-line: rgba(15, 23, 42, 0.10);
+  --shadow-card: 0 1px 3px rgba(15,23,42,.06), 0 20px 48px rgba(15,23,42,.12);
+}
+
+/* ── dark tokens ── */
+.theme-dark {
+  --ink: #F1F5F9;
+  --ink-2: #CBD5E1;
+  --muted: #94A3B8;
+  --muted-2: #64748B;
+  --line: rgba(241, 245, 249, 0.10);
+  --line-2: rgba(241, 245, 249, 0.06);
+  --surface: #1E293B;
+  --surface-2: #0F172A;
+  --cream: #1E293B;
+  --bone: #334155;
+  --accent: #3B82F6;
+  --accent-2: #1E3A5F;
+  --accent-3: #60A5FA;
+  --good: #34D399;
+  --page-bg: #0F172A;
+  --glass: rgba(30, 41, 59, 0.80);
+  --glass-line: rgba(241, 245, 249, 0.08);
+  --shadow-card: 0 1px 3px rgba(0,0,0,.4), 0 24px 56px rgba(0,0,0,.5);
+}
+
+/* ── base ── */
+html, body { overflow-x: hidden; }
 body {
-  font-family: 'Geist', 'SF Pro Text', ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   color: var(--ink);
   background: var(--page-bg);
   min-height: 100vh;
 }
-
-/* ── light tokens (default) ── */
-:root {
-  --ink: #1a1714;
-  --ink-2: #3d3530;
-  --muted: #7a6f63;
-  --muted-2: #a8a095;
-  --line: rgba(26, 23, 20, 0.10);
-  --line-2: rgba(26, 23, 20, 0.06);
-  --surface: #ffffff;
-  --surface-2: #faf7f2;
-  --cream: #f5efe5;
-  --bone: #efe7d8;
-  --accent: #e0764a;
-  --accent-2: #c9a9f5;
-  --accent-3: #f3c98b;
-  --good: #2b8f6a;
-  --page-bg: #f3ecde;
-  --glass: rgba(255, 255, 255, 0.65);
-  --glass-line: rgba(255, 255, 255, 0.9);
-  --shadow-card: 0 1px 0 rgba(255,255,255,.6) inset,
-    0 1px 2px rgba(26,23,20,.04),
-    0 24px 64px -16px rgba(60,40,20,.18),
-    0 8px 24px -12px rgba(60,40,20,.10);
-}
-
-/* ── dark tokens ── */
-.theme-dark {
-  --ink: #f4ede0;
-  --ink-2: #d6cdbf;
-  --muted: #9a907f;
-  --muted-2: #6d6457;
-  --line: rgba(244, 237, 224, 0.12);
-  --line-2: rgba(244, 237, 224, 0.06);
-  --surface: #1c1916;
-  --surface-2: #15130f;
-  --cream: #26221c;
-  --bone: #2f2a22;
-  --accent: #f0936b;
-  --accent-2: #b39bff;
-  --accent-3: #f5ce93;
-  --good: #5ed3a3;
-  --page-bg: #0f0d0a;
-  --glass: rgba(36, 32, 26, 0.55);
-  --glass-line: rgba(255, 255, 255, 0.06);
-  --shadow-card: 0 1px 0 rgba(255,255,255,.04) inset,
-    0 1px 2px rgba(0,0,0,.4),
-    0 32px 80px -16px rgba(0,0,0,.55),
-    0 12px 32px -12px rgba(0,0,0,.35);
-}
-
-/* ── keyframes ── */
-@keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position:  200% 0; }
-}
-@keyframes pulseRing {
-  0%   { transform: scale(1);   opacity: .7; }
-  100% { transform: scale(2.2); opacity: 0;  }
-}
-@keyframes spin     { to { transform: rotate(360deg); } }
-@keyframes drawCheck  { to { stroke-dashoffset: 0; } }
-@keyframes drawCircle { to { stroke-dashoffset: 0; } }
-@keyframes floatUp {
-  from { transform: translateY(8px); opacity: 0; }
-  to   { transform: translateY(0);   opacity: 1; }
-}
+button { cursor: pointer; }
+input:focus, select:focus, button:focus { outline: none; }
+::selection { background: rgba(37, 99, 235, .20); }
+a { color: inherit; text-decoration: none; }
 
 /* ── typography helpers ── */
-.serif { font-family: var(--font-instrument-serif), 'Instrument Serif', Georgia, serif; font-weight: 400; letter-spacing: -.01em; }
-.mono  { font-family: 'Geist Mono', ui-monospace, Menlo, monospace; }
+.serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; letter-spacing: -.01em; }
 .num   { font-variant-numeric: tabular-nums; }
 
-/* ── base resets ── */
-button { font-family: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
-input, select { font-family: inherit; color: inherit; }
-input:focus, select:focus, button:focus { outline: none; }
-::selection { background: rgba(224, 118, 74, .25); }
+/* ── keyframes not in Tailwind config ── */
+@keyframes drawCheck  { to { stroke-dashoffset: 0; } }
+@keyframes drawCircle { to { stroke-dashoffset: 0; } }
 
 /* ── scrollbars ── */
 .nice-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
-.nice-scroll::-webkit-scrollbar-thumb { background: rgba(26,23,20,.15); border-radius: 8px; }
-.nice-scroll::-webkit-scrollbar-thumb:hover { background: rgba(26,23,20,.25); }
-.theme-dark .nice-scroll::-webkit-scrollbar-thumb { background: rgba(244,237,224,.15); }
-
-a { color: inherit; text-decoration: none; }
+.nice-scroll::-webkit-scrollbar-thumb { background: rgba(15,23,42,.15); border-radius: 8px; }
+.nice-scroll::-webkit-scrollbar-thumb:hover { background: rgba(15,23,42,.25); }
+.theme-dark .nice-scroll::-webkit-scrollbar-thumb { background: rgba(241,245,249,.15); }
