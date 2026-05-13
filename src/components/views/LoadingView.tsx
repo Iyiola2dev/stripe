@@ -9,15 +9,10 @@ function ProcessStep({ label, delay }: { label: string; delay: number }) {
     return () => clearTimeout(t);
   }, [delay]);
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: done ? 'var(--ink-2)' : 'var(--muted)', transition: 'color .25s' }}>
-      <span style={{
-        width: 16, height: 16, borderRadius: '50%',
-        background: done ? 'var(--good)' : 'transparent',
-        border: done ? '0' : '1.5px solid var(--muted-2)',
-        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        transition: 'background .25s',
-      }}>
-        {done && <CheckIcon size={10} color="#fff" />}
+    <div className={`flex items-center gap-2.5 text-[13px] transition-colors duration-300 ${done ? 'text-ink-2' : 'text-muted'}`}>
+      <span className={`w-4 h-4 rounded-full inline-flex items-center justify-center transition-all duration-300
+        ${done ? 'bg-good' : 'bg-transparent border-[1.5px] border-muted-2'}`}>
+        {done && <CheckIcon size={9} color="#fff" />}
       </span>
       {label}
     </div>
@@ -28,34 +23,16 @@ const STEPS = ['Verifying payment method', 'Creating subscription', 'Activating 
 
 export function LoadingView() {
   return (
-    <div style={{
-      padding: '60px 40px', minHeight: 480,
-      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      gap: 22, textAlign: 'center',
-    }}>
-      <div style={{ position: 'relative', width: 64, height: 64 }}>
-        <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: '3px solid rgba(26,23,20,.08)' }} />
-        <div style={{
-          position: 'absolute', inset: 0, borderRadius: '50%',
-          border: '3px solid transparent',
-          borderTopColor: 'var(--ink)', borderRightColor: 'var(--accent)',
-          animation: 'spin 1s linear infinite',
-        }} />
-        <div style={{
-          position: 'absolute', inset: 16, borderRadius: '50%',
-          background: 'linear-gradient(135deg, #f3c98b, #e0764a)',
-          opacity: .25, animation: 'pulseRing 1.6s ease-out infinite',
-        }} />
+    <div className="py-16 px-10 flex flex-col items-center justify-center gap-6 text-center">
+      <div className="relative w-14 h-14">
+        <div className="absolute inset-0 rounded-full border-[3px] border-line" />
+        <div className="absolute inset-0 rounded-full border-[3px] border-transparent border-t-accent animate-spin" />
       </div>
       <div>
-        <div className="serif" style={{ fontSize: 26, fontStyle: 'italic', color: 'var(--ink)' }}>
-          Securing your subscription…
-        </div>
-        <div style={{ fontSize: 13.5, color: 'var(--muted)', marginTop: 6 }}>
-          Talking to Stripe · do not close this window
-        </div>
+        <div className="text-[20px] font-semibold text-ink">Securing your subscription…</div>
+        <div className="text-[13px] text-muted mt-1">Talking to Stripe · do not close this window</div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-start', minWidth: 220 }}>
+      <div className="flex flex-col gap-2 items-start min-w-[220px]">
         {STEPS.map((s, i) => <ProcessStep key={i} label={s} delay={i * 700} />)}
       </div>
     </div>

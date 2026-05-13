@@ -7,30 +7,19 @@ const COUNTRIES: [string, string][] = [
   ['SG', 'Singapore'], ['NL', 'Netherlands'], ['SE', 'Sweden'],
 ];
 
-interface Props {
-  value: string;
-  onChange: (v: string) => void;
-  style?: React.CSSProperties;
-}
+interface Props { value: string; onChange: (v: string) => void; className?: string; }
 
-export function CountrySelect({ value, onChange, style = {} }: Props) {
+export function CountrySelect({ value, onChange, className = '' }: Props) {
   return (
-    <div style={{
-      display: 'flex', alignItems: 'center', height: 46, padding: '0 12px',
-      position: 'relative', background: 'transparent', ...style,
-    }}>
+    <div className={`relative flex items-center h-[46px] px-3 bg-transparent ${className}`}>
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
-        style={{
-          appearance: 'none', WebkitAppearance: 'none',
-          background: 'transparent', border: 0, flex: 1,
-          fontSize: 14.5, color: 'var(--ink)', paddingRight: 18, cursor: 'pointer',
-        }}
+        className="appearance-none bg-transparent border-0 flex-1 text-[14.5px] text-ink pr-4 cursor-pointer focus:outline-none"
       >
         {COUNTRIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
       </select>
-      <span style={{ position: 'absolute', right: 10, pointerEvents: 'none', color: 'var(--muted)' }}>
+      <span className="absolute right-2.5 pointer-events-none text-muted">
         <ChevronIcon size={12} />
       </span>
     </div>

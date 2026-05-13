@@ -1,8 +1,7 @@
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
-import { FeatureRow } from '@/components/ui/FeatureRow';
-import { Chip } from '@/components/ui/Chip';
+import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icon';
 import { StripeMark } from '@/components/ui/StripeMark';
-import { LockIcon, ArrowRightIcon } from '@/components/ui/Icon';
+import { LockIcon } from '@/components/ui/Icon';
 
 const FEATURES = [
   'Unlimited brand kits & libraries',
@@ -17,48 +16,45 @@ interface Props { onContinue: () => void; }
 
 export function PricingView({ onContinue }: Props) {
   return (
-    <div style={{ padding: '40px 44px', display: 'flex', flexDirection: 'column', gap: 28, animation: 'floatUp .4s ease both' }}>
+    <div className="px-5 md:px-10 py-4 md:py-9 flex flex-col gap-6 animate-floatUp">
       <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
-          <Chip tone="test">
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#c4853a', boxShadow: '0 0 0 3px rgba(196,133,58,.18)' }} />
-            Test mode
-          </Chip>
-          <span style={{ fontSize: 11.5, color: 'var(--muted)' }}>14-day free trial · cancel anytime</span>
+        <div className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-accent bg-accent-2 px-2.5 py-1 rounded-full mb-4">
+          14-day free trial · cancel anytime
         </div>
-        <div style={{ fontSize: 13.5, color: 'var(--muted)', letterSpacing: '.04em', textTransform: 'uppercase', fontWeight: 500, marginBottom: 8 }}>
-          Halo Pro
-        </div>
-        <h1 style={{ fontSize: 38, lineHeight: 1.08, margin: 0, fontWeight: 500, letterSpacing: '-0.025em', color: 'var(--ink)' }}>
-          Everything you need to <span className="serif" style={{ fontStyle: 'italic', fontWeight: 400 }}>ship&nbsp;brand work</span>, end to end.
+        <div className="text-[12px] text-muted tracking-[.06em] uppercase font-semibold mb-2">Follow Pack</div>
+        <h1 className="text-[30px] leading-[1.15] m-0 font-bold tracking-[-0.025em] text-ink">
+          Everything you need to ship brand work, end to end.
         </h1>
-        <p style={{ fontSize: 15.5, color: 'var(--muted)', marginTop: 12, marginBottom: 0, lineHeight: 1.5, maxWidth: 440 }}>
-          One plan with every Halo capability. Bring your whole team into the same brand operating system.
+        <p className="text-[14px] text-muted mt-3 mb-0 leading-relaxed">
+          One plan with every capability. Bring your whole team into the same brand operating system.
         </p>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 18, padding: '18px 0', borderTop: '1px solid var(--line-2)', borderBottom: '1px solid var(--line-2)', flexWrap: 'wrap' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', flexShrink: 0 }}>
-          <span style={{ fontSize: 32, color: 'var(--ink-2)', marginRight: 3, fontWeight: 400 }}>$</span>
-          <span className="serif num" style={{ fontSize: 92, lineHeight: 0.95, color: 'var(--ink)', letterSpacing: '-.02em' }}>99</span>
-        </div>
-        <div>
-          <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--ink-2)' }}>per month</div>
-          <div style={{ fontSize: 12.5, color: 'var(--muted)' }}>billed monthly · USD</div>
-        </div>
+      <div className="flex items-baseline gap-1 py-5 border-t border-b border-line">
+        <span className="text-[20px] text-ink-2 font-medium">$</span>
+        <span className="num text-[56px] font-bold text-ink leading-none tracking-tight">99</span>
+        <span className="text-[14px] text-muted ml-1">/ month · USD</span>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 28px' }}>
-        {FEATURES.map((f, i) => <FeatureRow key={i}>{f}</FeatureRow>)}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2.5">
+        {FEATURES.map((f, i) => (
+          <div key={i} className="flex items-start gap-2 text-[13.5px] text-ink-2">
+            <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-good/10 flex items-center justify-center">
+              <CheckIcon size={9} color="var(--good)" />
+            </span>
+            {f}
+          </div>
+        ))}
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 10 }}>
+      <div className="flex flex-col gap-2.5 mt-1">
         <PrimaryButton full onClick={onContinue}>
-          Subscribe now <ArrowRightIcon size={14} color="#f4ede0" />
+          Subscribe now <ArrowRightIcon size={14} color="#fff" />
         </PrimaryButton>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, color: 'var(--muted)', fontSize: 12 }}>
-          <LockIcon size={12} /> <span>Secure payment powered by</span>
-          <span style={{ color: 'var(--ink-2)' }}><StripeMark color="currentColor" /></span>
+        <div className="flex items-center justify-center gap-1.5 text-muted text-[12px]">
+          <LockIcon size={12} />
+          <span>Secure payment powered by</span>
+          <span className="text-ink-2"><StripeMark color="currentColor" /></span>
         </div>
       </div>
     </div>
