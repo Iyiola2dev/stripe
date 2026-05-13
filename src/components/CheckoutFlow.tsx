@@ -8,7 +8,7 @@ import { SuccessView } from "@/components/views/SuccessView";
 import { CheckIcon } from "@/components/ui/Icon";
 
 type Step = "pricing" | "checkout" | "loading" | "success";
-const CRUMBS = ["Pricing", "Checkout", "Confirm order"] as const;
+const CRUMBS = ["Pricing", "Checkout", "Confirm"] as const;
 
 export function CheckoutFlow({ publishableKey }: { publishableKey: string }) {
   const [step, setStep] = useState<Step>("pricing");
@@ -21,7 +21,7 @@ export function CheckoutFlow({ publishableKey }: { publishableKey: string }) {
   const reset = () => setStep("pricing");
 
   const crumbIdx = step === "pricing" ? 0 : step === "checkout" || step === "loading" ? 1 : 2;
-  const cardWidth = step === "checkout" || step === "loading" ? "w-[860px]" : "w-[540px]";
+  const cardWidth = step === "checkout" || step === "loading" ? "w-full md:w-[860px]" : "w-full md:w-[540px]";
 
   return (
     <div className={`${cardWidth} transition-all duration-300`}>

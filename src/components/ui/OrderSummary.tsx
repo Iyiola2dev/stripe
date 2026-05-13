@@ -9,7 +9,7 @@ interface Props {
 
 export function OrderSummary({ busy, onSubmit }: Props) {
   return (
-    <div className="flex-1 px-8 py-8 bg-surface-2 flex flex-col gap-5">
+    <div className="hidden md:flex flex-1 px-8 py-8 bg-surface-2 flex-col gap-5">
       <div className="text-[18px] font-semibold text-ink">Order Summary</div>
 
       <div className="flex flex-col gap-3">
