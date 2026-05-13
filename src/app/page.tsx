@@ -1,95 +1,57 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import { useState, useMemo } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { PageBackground } from '@/components/layout/PageBackground';
+import { CardSurface } from '@/components/layout/CardSurface';
+import { TopBar } from '@/components/layout/TopBar';
+import { PricingView } from '@/components/views/PricingView';
+import { CheckoutView } from '@/components/views/CheckoutView';
+import { LoadingView } from '@/components/views/LoadingView';
+import { SuccessView } from '@/components/views/SuccessView';
 
-export default function Home() {
+type Step = 'pricing' | 'checkout' | 'loading' | 'success';
+
+export default function HomePage() {
+  const [step, setStep] = useState<Step>('pricing');
+  const [cardLast4, setCardLast4] = useState('4242');
+
+  const stripePromise = useMemo(
+    () => loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!),
+    []
+  );
+
+  const handleSuccess = (last4: string) => {
+    setCardLast4(last4);
+    setStep('success');
+  };
+
+  const handleLoadingChange = (loading: boolean) => {
+    if (loading) setStep('loading');
+  };
+
+  const reset = () => setStep('pricing');
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    <>
+      <PageBackground />
+      <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh' }}>
+        <TopBar step={step} onReset={reset} />
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '40px 32px 56px' }}>
+          <CardSurface>
+            {step === 'pricing' && <PricingView onContinue={() => setStep('checkout')} />}
+            {step === 'checkout' && (
+              <CheckoutView
+                stripePromise={stripePromise}
+                onBack={() => setStep('pricing')}
+                onSuccess={handleSuccess}
+                onLoadingChange={handleLoadingChange}
+              />
+            )}
+            {step === 'loading' && <LoadingView />}
+            {step === 'success' && <SuccessView onContinue={reset} cardLast4={cardLast4} />}
+          </CardSurface>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+    </>
   );
 }
